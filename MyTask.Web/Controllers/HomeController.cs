@@ -17,14 +17,14 @@ namespace MyTask.Web.Controllers
             this.userRepository = userRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(int pageNumber=1, int pageSize = 3)
+        public async Task<IActionResult> Index( int pageSize = 3,int pageNumber=1)
         {
             var totalRecords=await userRepository.CountAsync();
             var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
             ViewBag.TotalPages=totalPages;
             if (HttpContext.Session.GetString("UserKey") != null) {
 
-                var users=await userRepository.GetAllUsersAsync(pageSize,pageNumber);
+                var users=await userRepository.GetAllUsersAsync(pageNumber,pageSize);
                 var userViewModel=new List<UsersListViewModel>();
                 foreach (var user in users) 
                 {

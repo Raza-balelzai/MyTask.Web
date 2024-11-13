@@ -20,12 +20,12 @@ namespace MyTask.Web.Repository
 
         public async Task<IEnumerable<User>> GetAllUsersAsync(int pageNumber = 1,int pageSize=100)
         {
-            //return await context.Users.ToListAsync();
             var query = context.Users.AsQueryable();
+            //return await context.Users.ToListAsync();
             var skipResults = (pageNumber - 1) * pageSize;
-            var users = await context.Users.Skip(skipResults).Take(pageSize).ToListAsync();
+            query=query.Skip(skipResults).Take(pageSize);
 
-            return (users);
+            return await query.ToListAsync();
 
         }
     }
